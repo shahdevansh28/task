@@ -16,9 +16,22 @@
 
         Person IPersonRepo.Add(Person person)
         {
-            context.Persons.Add(person);
-            context.SaveChanges();
-            return person;
+            //Check if Id is exist or not
+            IEnumerable<Person> query = context.Persons.Where(p => p.Id == person.Id);
+            Console.WriteLine(query.Count());
+
+            /*var temp = context.Persons.Where(p => p.Id == person.Id).ToList().Any();*/
+            if (query.Count() == 0)
+            {
+                context.Persons.Add(person);
+                context.SaveChanges();
+                return person;
+            }
+            else
+            {
+                person = null;
+                return person;
+            }
         }
     }
 }

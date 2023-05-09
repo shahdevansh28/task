@@ -32,9 +32,17 @@ namespace task.Controllers
             if (ModelState.IsValid)
             {
                 Person newPerson = _personRepo.Add(person);
+                if (newPerson != null)
+                {
+                    TempData["Msg"] = "Added Successfully";
+                }
+                else
+                {
+                    TempData["Msg"] = "ID is already exsist";
+                }
                 return RedirectToAction("index");
             }
-            return View();
+            return View(person);
         }
         public IActionResult Privacy()
         {
